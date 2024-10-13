@@ -5,13 +5,23 @@ public class RegisterUserDto {
     private String email;
     private String password;
     private String fullName;
+    private String role;
 
     public RegisterUserDto(){}
 
-    public RegisterUserDto(String email, String password, String fullName) {
+    public RegisterUserDto(String email, String password, String fullName,String role) {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

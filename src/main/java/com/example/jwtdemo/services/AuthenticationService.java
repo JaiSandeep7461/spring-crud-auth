@@ -3,6 +3,7 @@ package com.example.jwtdemo.services;
 import com.example.jwtdemo.dtos.LoginUserDto;
 import com.example.jwtdemo.dtos.RegisterUserDto;
 import com.example.jwtdemo.entities.User;
+import com.example.jwtdemo.enums.Role;
 import com.example.jwtdemo.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +34,7 @@ public class AuthenticationService {
         user.setFullName(input.getFullName());
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
+        user.setRole(Role.valueOf(input.getRole()));
         return userRepository.save(user);
     }
 
