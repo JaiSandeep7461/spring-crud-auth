@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,7 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
+        System.out.println("12102024 >>>> "+userDetails.getUsername().length());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

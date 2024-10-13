@@ -43,7 +43,9 @@ public class AuthenticationService {
                         input.getPassword()
                 )
         );
-
+        System.out.println("The email is >>  "+input.getEmail().trim());
+        System.out.println("The result is >>> "+userRepository.findByEmail(input.getEmail())
+                .orElseThrow().getUsername());
         return userRepository.findByEmail(input.getEmail())
                 .orElseThrow();
     }
