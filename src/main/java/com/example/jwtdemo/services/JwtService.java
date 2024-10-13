@@ -1,5 +1,6 @@
 package com.example.jwtdemo.services;
 
+import com.example.jwtdemo.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -35,10 +36,16 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> extraClaims = new HashMap<>();
+        if(userDetails instanceof User){
+            User user = (User) userDetails;
+            extraClaims.put("role", user.getRole());
+        }
+        return generateToken(extraClaims, userDetails);
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
@@ -73,6 +80,11 @@ public class JwtService {
 
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
+    }
+
+    public String extractRole(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("role", String.class);
     }
 
     private Claims extractAllClaims(String token) {
