@@ -1,5 +1,6 @@
 package com.example.jwtdemo.configs;
 
+import com.example.jwtdemo.enums.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,31 +31,14 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        /*http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/products/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/products/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,"/api/products/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/api/products/**")
-                        .authenticated()
-                        .anyRequest()
-                        .authenticated()
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);*/
-
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**")
-                        .authenticated()
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/products/**").hasAuthority(Role.ADMIN.name())
                         .anyRequest()
                         .authenticated()
+
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -62,9 +46,11 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+
         return http.build();
 
     }
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

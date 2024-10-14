@@ -54,7 +54,6 @@ public class User implements UserDetails {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 
     public  User(){
